@@ -8,8 +8,7 @@
 #ifndef RANDOM_H
 #define RANDOM_H
 
-#define RDSEED_SEED     //if reseeding option is selected, RDSEED will be used to RESEED.
-// #define RDRAND_SEED  //option to also use RDRAND for reseeding which is slightly faster
+
 
 //-------------------------------------------------------------------------
 /* The list of PRNGs software and hardware for possible use in Random.h */
@@ -24,7 +23,7 @@ MRG         -  Combined Multiple Recursive Random Number Generators
 FNV1A       -  fnv1a non-cyrptographic hash algorithm
 
 //------------------------------------------------------------------------- */
-
+// These are defined in Makefile or at the command line when compiling
 // #define RDRAND       
 // #define MURMUR3
 // #define MURMUR64
@@ -35,8 +34,11 @@ FNV1A       -  fnv1a non-cyrptographic hash algorithm
 // #define MT
 // #define MRG
 // #define FNV1A
-// #define RNGARRAY1
-// #define RNGARRAY2
+// #define RNG1
+// #define RNG2
+
+#define RDSEED_SEED     //if reseeding option is selected, RDSEED will be used to RESEED.
+// #define RDRAND_SEED  //option to also use RDRAND for reseeding which is slightly faster
 
 #define MAX_RNG_SIZE 10000000  //maximum size for RNG Array
 #define RESEED_NUM 10000       //reseeding interval is decided Here
