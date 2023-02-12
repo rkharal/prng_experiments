@@ -6,7 +6,25 @@
 
  This repository contains the following:
  
- 1) various PRNGs to test with in random.h
- 2) a nth-bit summation test program to test for patterns in the n-th bit positions of random numbers
+ -various PRNGs to test with in random.h
+ -an nth-bit summation test program to test for patterns in the n-th bit positions of random numbers
+ -scripts to run experiments
+ -plot scripts to automate plot generation for visualizing summation results.
+
+ See USAGE instructions below
+
+ Further Information
+ Software PRNG and Hardware RNGs:
+
+
+
+
+
+
+
+
+
+ USAGE:
+
  
 
