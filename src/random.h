@@ -2,7 +2,7 @@
  * Preliminary C++ implementation random.h using fnv1a
  * Copyright (C) 2014 Trevor Brown
  *
- * PRNGs added 2021
+ * Additional Pseudo Random Number Generators (PRNGs) added 2021
  */
 
 #ifndef RANDOM_H
@@ -28,14 +28,14 @@ FNV1A       -  fnv1a non-cyrptographic hash algorithm
 // #define MURMUR3
 // #define MURMUR64
 // #define XORSH
-// #define XORSH_RDSEED
-// #define XORSH_RDRAND
-// #define XORSH_RAND
+// #define XORSH_RDSEED     // Re-seed XORSH with RDSEED
+// #define XORSH_RDRAND     // Re-seed XORSH with RDRAND
+// #define XORSH_RAND       // Re-seed XORSH with rand()
 // #define MT
 // #define MRG
 // #define FNV1A
-// #define RNG1
-// #define RNG2
+// #define RNG1             // Array of Pre-generated Random Numbers
+// #define RNG2             // Array of Pre-generated Random Numbers
 
 #define RDSEED_SEED     //if reseeding option is selected, RDSEED will be used to RESEED.
 // #define RDRAND_SEED  //option to also use RDRAND for reseeding which is slightly faster
