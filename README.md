@@ -27,21 +27,13 @@ Work related to PRNG Experiments (Section 6) from this work:
  
     Murmur3/Murmur64 - [Austin Appleby. Murmurhash3, 2012. URL: ](https://github.com/aappleby/smhasher/wiki/)
  
-    XORSH -
+    XORSH - [George Marsalia XOR-Shift: Xorshift. 2022. URL:] (https://en.wikipedia.org/wiki/Xorshift)
 
-    MT-
+    MT- Makoto Matsumoto and Takuji Nishimura. Mersenne twister: A 623-dimensionally equidistributed uniform pseudo-random number generator
+ 
+    MRG- [Morita Naoyuki. Pseudo random number generator with mrg (multiple recursive generator),2020. URL: ](https://www.schneier.com/blog/archives/2008/05/random_number_b.html.)
 
-    MRG -
-
-    RDRAND -
-
-    RDSEED -
-
-
-
-
-
-
+    RDRAND/RDSEED - Intel Secure Key Instructions Gael Hofemeier and Robert Chesebrough. Introduction to intel aes-ni and intel secure key instructions. Intel, White Paper, 62, 2012.
 
 
  USAGE:
