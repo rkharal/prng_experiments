@@ -36,7 +36,19 @@ Experiments related to PRNG (Pseudo Random Number Generator) usage in microbench
    - *RDRAND/RDSEED* - Intel Secure Key Instructions Gael Hofemeier and Robert Chesebrough. Introduction to intel aes-ni and intel secure key instructions. Intel, White Paper, 62, 2012.
 
 
- USAGE:
+# Build Instructions:
 
- 
+   - clone this repository
+   - All executables exist in the bin directory. We generate one exe for each PRNG
+   - to rebuild the various PRNG executables
+
+
+
+# Usage: 
+## To Test a Pre-Generated Array of Random Numbers do the following:
+
+
+
+
+## To Compare Bitwise Randomness do the following:
 
