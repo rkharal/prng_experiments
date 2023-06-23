@@ -1,4 +1,4 @@
-# prng_experiments
+# PRNG_EXPERIMENTS
 Experiments related to PRNG (Pseudo Random Number Generator) usage in microbenchmarks experiements for testing
  conconurrent data structures.
 
@@ -33,22 +33,24 @@ Experiments related to PRNG (Pseudo Random Number Generator) usage in microbench
  
    - *MRG*- ["Morita Naoyuki. Pseudo random number generator with mrg (multiple recursive generator),2020"](https://www.schneier.com/blog/archives/2008/05/random_number_b.html)
 
-   - *RDRAND/RDSEED* - Intel Secure Key Instructions Gael Hofemeier and Robert Chesebrough. Introduction to intel aes-ni and intel secure key instructions. Intel, White Paper, 62, 2012.
+   - *RDRAND/RDSEED* - Intel Secure Key Instructions Gael Hofemeier and Robert Chesebrough. ["Introduction to intel aes-ni and intel secure key instructions."](https://www.intel.com/content/dam/develop/external/us/en/documents/introduction-to-intel-secure-key-instructions.pdf) 
 
 
 # Build Instructions:
 
    - clone this repository
    - All executables exist in the bin directory. We generate one exe for each PRNG
-   - to rebuild the various PRNG executables
+   - To rebuild the various PRNG executables:
+      - see Makefile in src directory 
+      - For example: g++ -o ../bin/mm3_rng run_rng.cpp -DMURMUR3 -mrdrnd -mrdseed
 
 
 
 # Usage: 
-## To Test a Pre-Generated Array of Random Numbers do the following:
+## To Test a Pre-Generated Array of Random Numbers:
 
 
 
 
-## To Compare Bitwise Randomness do the following:
+## To Compare Bitwise Randomness:
 
