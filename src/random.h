@@ -101,7 +101,7 @@ private:
 public:
     Random()
     {
-        //_init();
+
         this->seed = 0;
     }
 
