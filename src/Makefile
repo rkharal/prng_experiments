@@ -17,23 +17,23 @@ parse: parse_rng.cpp
 all_rngs: xorsh mm3 mm64 mt mrg fnv1a rdrand 
 
 xorsh: run_rng.cpp	
-	g++ -o ./bin/xorsh_rng run_rng.cpp -DXORSH $(LIBS) $(CFLAGS)
+	g++ -o ../bin/xorsh_rng run_rng.cpp -DXORSH $(LIBS) $(CFLAGS)
 
 mm3: run_rng.cpp	
-	g++ -o ./bin/mm3_rng run_rng.cpp -DMURMUR3 $(LIBS) $(CFLAGS)	
+	g++ -o ../bin/mm3_rng run_rng.cpp -DMURMUR3 $(LIBS) $(CFLAGS)	
 
 mm64: run_rng.cpp	
-	g++ -o ./bin/m64_rng run_rng.cpp -DMURMUR64 $(LIBS) $(CFLAGS)
+	g++ -o ../bin/m64_rng run_rng.cpp -DMURMUR64 $(LIBS) $(CFLAGS)
 
 mt: run_rng.cpp	
-	g++ -o ./bin/mt_rng run_rng.cpp -DMT $(LIBS) $(CFLAGS)	
+	g++ -o ../bin/mt_rng run_rng.cpp -DMT $(LIBS) $(CFLAGS)	
 
 mrg: run_rng.cpp	
-	g++ -o ./bin/mrg_rng run_rng.cpp -DMRG $(LIBS) $(CFLAGS)	
+	g++ -o ../bin/mrg_rng run_rng.cpp -DMRG $(LIBS) $(CFLAGS)	
 
 fnv1a: run_rng.cpp	
-	g++ -o ./bin/fnv1a_rng run_rng.cpp -DFNV1A $(LIBS) $(CFLAGS)	
+	g++ -o ../bin/fnv1a_rng run_rng.cpp -DFNV1A $(LIBS) $(CFLAGS)	
 
 rdrand: run_rng.cpp	
-	g++ -o ./bin/rdrand_rng run_rng.cpp -DRDRAND $(LIBS) $(CFLAGS)
+	g++ -o ../bin/rdrand_rng run_rng.cpp -DRDRAND $(LIBS) $(CFLAGS)
 
