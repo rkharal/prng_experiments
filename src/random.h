@@ -3,6 +3,7 @@
  * Copyright (C) 2014 Trevor Brown
  *
  * Additional Pseudo Random Number Generators (PRNGs) added 2021
+ * Rosina Kharal
  */
 
 #ifndef RANDOM_H
@@ -11,19 +12,24 @@
 
 
 //-------------------------------------------------------------------------
-/* The list of PRNGs software and hardware for possible use in Random.h */
-/* Descriptions of PRNGs. Additional information on PRNGs in README
+/* The list of software PRNGs and hardware RNGs for possible use in Random.h */
+/*  Additional information on PRNGs in README.md
 
-MURMUR2     -  Murmur hash2
-MURMUR3     -  Murmur hash3 
-MURMUR64    -  Murmur hash3 64-bit version
-XORSH       -  Marsalgia XORSH* algorithm
-MT          -  Mersenne Twister
-MRG         -  Combined Multiple Recursive Random Number Generators
-FNV1A       -  fnv1a non-cyrptographic hash algorithm
+MURMUR3     - Murmur hash3 
+MURMUR64    - Murmur hash an alternative 64-bit version
+XORSH       - Marsalgia XORSH* algorithm
+MT          - Mersenne Twister
+MRG         - Combined Multiple Recursive Random Number Generators
+FNV1A       - fnv1a non-cyrptographic hash algorithm
+RDRAND      - Hardware Random Number Generator using intel secure key RDRAND
+RDSEED      - Hardware RNG using intel secure key RESEED. 
+            - Generally RDSEED is used for reseeding other PRNGs
 
-//------------------------------------------------------------------------- */
-// These are defined in Makefile or at the command line when compiling
+/* ------------------------------------------------------------------------- 
+   These are defined in Makefile or at the command line when compiling.
+   Turning on ONE of the below decides which algorithm is used in class 
+   Random to generate random numbers provided by the next() function. 
+------------------------------------------------------------------------- */
 // #define RDRAND       
 // #define MURMUR3
 // #define MURMUR64
@@ -34,10 +40,11 @@ FNV1A       -  fnv1a non-cyrptographic hash algorithm
 // #define MT
 // #define MRG
 // #define FNV1A
-// #define RNG1             // Array of Pre-generated Random Numbers
-// #define RNG2             // Array of Pre-generated Random Numbers
+// #define RNG1             // Array of Pre-generated Random Numbers using XORSH
+// #define RNG2             // Array of Pre-generated Random Numbers using MT
 
-#define RDSEED_SEED     //if reseeding option is selected, RDSEED will be used to RESEED.
+#define RDSEED_SEED     // If reseeding option is selected, RDSEED will be
+                        // used as default reseeding algorithm RESEED.
 // #define RDRAND_SEED  //option to also use RDRAND for reseeding which is slightly faster
 
 #define MAX_RNG_SIZE 10000000  //maximum size for RNG Array
@@ -75,10 +82,6 @@ private:
     struct RNGState_64
     {
         uint64_t a;
-        // uint64_t y;
-        // uint64_t z;
-        // uint64_t w;
-        // uint64_t c;
     };
     PAD;
     RNGState state;
@@ -88,8 +91,6 @@ private:
     mt19937_64 mt_rand;
     PAD;
     uint64_t *rnglist; // for array of random numbers
-    // uint64_t *rnglist[MAX_RNG_SIZE];
-    // new uint64_t[MAX_RNG_SIZE];
     PAD;
     uint32_t index = 0;
     PAD;
@@ -109,7 +110,8 @@ public:
         this->seed = seed;
     }
     //-------------------------------------
-    /* init function will intialize different PRNGs by invoking their individual init functions where necessary depending on which PRNG is defined*/
+    /* init function will intialize different PRNGs by invoking their individual init
+    functions or initalization operations where necessary depending on which PRNG is defined */
     //-------------------------------------
     void _init()
     {
@@ -119,20 +121,18 @@ public:
 #endif
 
 #ifdef MRG
-
         MRG32k3a_init(seed);
-        // MRG32k3a_init_rdrand();
 
 #endif
 
-// pre-generated array of random numbers RNG1- KISS_Array, RNG2- MT_Array
+// pre-generated array of random numbers RNG1-XORSH_Array, RNG2-MT_Array
 #ifdef RNG1
-        // uint64_t *rnglist[MAX_RNG_SIZE]=new uint64_t[MAX_RNG_SIZE];
+        
         rnglist = new uint64_t[MAX_RNG_SIZE];
 
         index = 0;
         rnglist[0] = 10;
-        // printf("KISS Init: item 0 %lu \n", rnglist[0]);
+        // printf("XORSH Init: item 0 %lu \n", rnglist[0]);
         initialize_xorsh_array();
         initialize_xorsh_rngarray(); // CREATE ARRAY
 
@@ -213,7 +213,6 @@ public:
 #endif
     }
 
-
 //-------------------------------------
 //Functions for Reseeding option
 //Reseeding a PRNG- options using RDREED or RDRAND
@@ -244,7 +243,7 @@ public:
 
     uint64_t next_seed()
     {
-        // printf("reseeding in RD SEED \n");
+        // printf("reseeding in RD_SEED \n");
         return next_rdseed();
     }
 
@@ -279,11 +278,13 @@ public:
 #endif
 
 //------------------------------------------------------
-/* The set of PRNGs follow */
+/* The set of software PRNGs or hardware RNGs follow */
 
 //------------------------------------------------------
-#ifdef RDRAND
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% USING RDRAND
+#ifdef RDRAND   
+    /*
+    rdrand 64 bit Hardware Instruction
+    */
 
     uint64_t next_rdrand()
     {
@@ -355,8 +356,7 @@ public:
         __MRG32k3a_s22 = __MRG32k3a_staffordMix13(s += 0x9e3779b97f4a7c15) % m2;
     }
 
-    /** Initializes directly the generator state. The first three values must be
-in the range [0..4294967087) and the last three values in the range [0..4294944443). */
+   
 
     void MRG32k3a_init6(const uint32_t s10, const uint32_t s11, const uint32_t s12, const uint32_t s20, const uint32_t s21, const uint32_t s22)
     {
@@ -438,6 +438,9 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
     }
 
 #elif defined MURMUR3
+    /*
+    MURMUR HASH 3
+    */
 
     uint64_t next(uint64_t n)
     {
@@ -493,9 +496,9 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
 
 #elif defined MURMUR64
 
-    // const char *key = "hi";
-    //  MurmurHash3_x64_128(key, (uint64_t)strlen(key), seed, hash_otpt);
-    //  cout << "hashed" << hash_otpt << endl;
+    /*
+    A 64-bit implementation of Murmur hash
+    */
 
     uint64_t next(uint64_t n)
     {
@@ -576,7 +579,9 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
     }
 
 #elif defined MT
-
+    /*
+    Mersenne Twister
+    */
     uint64_t next(uint64_t n)
     {
 
@@ -598,7 +603,9 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
     }
 
 #elif defined XORSH
-
+    /*
+    Marsaglia XOR Shift
+    */
 
     uint64_t next(uint64_t n)
     {
@@ -641,6 +648,9 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
     }
 
 #elif defined FNV1A
+    /*
+    fnv1a : Fowler-Noll-Vo hash function
+    */
 
     uint64_t next(uint64_t n)
     {
@@ -677,8 +687,10 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
     or RNG2- Array of RN using MT PRNG
     */
    //------------------------------------------------------
-#elif defined RNG1  // XORSH based Array
-
+#elif defined RNG1  
+    /*
+    XORSH based Array
+    */
     uint64_t next(uint64_t n)
     {
         if (index >= MAX_RNG_SIZE)
@@ -738,8 +750,10 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
         seed = next_seed();
     }
 
-#elif defined RNG2  // MT based Array
-
+#elif defined RNG2  
+    /*
+    MT based Array
+    */
     uint64_t next(uint64_t n)
     {
         if (index >= MAX_RNG_SIZE)
@@ -783,15 +797,15 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
     }
 
     //-----------------------------------------------------------------
-    /* These functions are specific to reseeding the XORSH PRNG Only */
-    /* RESEEDING the XORSH PRNG THOURH RDRAND
-    or RESEEDING through RDSEED
-    or RESEEDING through rand()
+    /* These functions are specific to reseeding the XORSH PRNG Only 
+        RESEEDING the XORSH PRNG THOURH RDRAND
+        or RESEEDING through RDSEED
+        or RESEEDING through rand()
     */
 
 #elif defined XORSH_RDSEED
 
-    // #ifdef XORSH
+    
 
     uint64_t next(uint64_t n)
     {
@@ -801,7 +815,7 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
 
             seedReset();
 
-            // printf(" KISS_RDSEED next RN with parameter reseeding count is: %i",count);
+            // printf(" XORSH_RDSEED next RN with parameter reseeding count is: %i",count);
             count = 0;
         }
         seed = _xorsh();
@@ -815,7 +829,7 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
         {
 
             seedReset();
-            // printf(" KISS_RDSEED next RN withOUT parameter reseeding count is: %i",count);
+            // printf(" XORSH_RDSEED next RN withOUT parameter reseeding count is: %i",count);
             count = 0;
         }
         seed = _xorsh();
@@ -852,7 +866,7 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
     }
 
 #elif defined XORSH_RDRAND
-    // #ifdef XORSH
+    
 
     uint64_t next(uint64_t n)
     {
@@ -862,7 +876,7 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
 
             seedReset();
 
-            // printf(" KISS_RDRAND next RN with parameter reseeding count is: %i",count);
+            // printf(" XORSH_RDRAND next RN with parameter reseeding count is: %i",count);
             count = 0;
         }
         seed = _xorsh();
@@ -876,7 +890,7 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
         {
 
             seedReset();
-            // printf(" KISS_RDRAND next RN withOUT parameter reseeding count is: %i",count);
+            // printf(" XORSH_RDRAND next RN withOUT parameter reseeding count is: %i",count);
             count = 0;
         }
         seed = _xorsh();
@@ -937,7 +951,7 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
 
             seedReset();
 
-            // printf(" KISS_RAND next RN with parameter reseeding count is: %i",count);
+            // printf(" XORSH_RAND next RN with parameter reseeding count is: %i",count);
             count = 0;
         }
         seed = _xorsh();
@@ -951,7 +965,7 @@ in the range [0..4294967087) and the last three values in the range [0..42949444
         {
 
             seedReset();
-            // printf(" KISS_RAND next RN withOUT parameter reseeding count is: %i",count);
+            // printf(" XORSH_RAND next RN withOUT parameter reseeding count is: %i",count);
             count = 0;
         }
         seed = _xorsh();
