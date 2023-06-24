@@ -14,20 +14,9 @@
 using namespace std;
 #include "random.h"
 #include "RndSet.h"
-
-//#define RESEED_INTERVAL 10000
                      
 #define RESEED_INTERVAL 10000
 
-/*
-struct timespec {
-        time_t   tv_sec;        // seconds 
-        long     tv_nsec;       // nanoseconds 
-};
-*/
-  
-
-  
 bool pattern_test(int n, RndSet *list[])
 {
     bool pass = true;
@@ -84,9 +73,9 @@ void print_usage(char **argv)
 {
     cout << "USAGE: " << argv[0] << " [options]" << endl;
     cout << "Options:" << endl;
-    cout << "    -r [int]     reseed: on or off" << endl;
-    cout << "    -n [int]     size of the key range that random keys will be drawn from (i.e., range [1, s])" << endl;
-    cout << "    -p [int]     number of random numbers to print (every 5th, p = 5)" << endl;
+    cout << "    -r [int]     reseed: on or off (r 1 or r 0)" << endl;
+    cout << "    -n [int]     size of the key range that random keys will be drawn from (i.e., range [1, n])" << endl;
+    cout << "    -p [int]     number of random numbers to print (every 5th, p 5)" << endl;
     cout << endl;
 }
 
@@ -122,7 +111,6 @@ void run_RNG(uint64_t total, int print, Random *rngs, bool reseed)
 
             if ( (i % reseed_freq) == 0) 
                 {
-                    //printf("reseeding at i %i reseed freq: %i \n ", i, reseed_freq);
                     rngs->reSeed();
                 }
         }
@@ -138,9 +126,6 @@ void setUp(int total_rngs, Random *rngs)
 
     clock_gettime(CLOCK_REALTIME, &seedtime);
     uint64_t nanotime = seedtime.tv_nsec;
-    //printf("Tme in nano %lu \n", nanotime);
-    //int maxtrials = 1000;
-    //srand(time(0));
     srand(nanotime);
     
 
@@ -160,7 +145,7 @@ int main(int argc, char **argv)
     Random rngs;
     RndSet *listR[n];
     bool pass1, pass2, pass3;
-    //bool firsttest = test_pattern_test(n, listR);
+    
 
     bool fine = false;
     bool reseed = false;
@@ -174,13 +159,13 @@ int main(int argc, char **argv)
         if (strcmp(argv[i], "-r") == 0)
         {
             // specify reseeding.
-            // not working yet
+           
             int rs = atoi(argv[++i]);
             if (rs == 1)
                 reseed = true;
             if (rs == 0)
                 reseed = false;
-            //printf("reseed is %i \n", reseed);
+            
         }
         else if (strcmp(argv[i], "-n") == 0)
         {
@@ -208,12 +193,9 @@ int main(int argc, char **argv)
     }
     std::cerr << std::endl;
 
-    //printf("calling setup \n");
 
     setUp(total_RN, &rngs);
-    //File Open
-    //RNGfile.open("example.csv");
-    //printf("calling run_RNG \n");
+
 
     run_RNG(total_RN, print_num, &rngs, reseed);
 
