@@ -7,8 +7,8 @@
 #include <stdlib.h> /* srand, rand */
 #include <stdint.h> /* uint64_t */
 #include <time.h>   /* time */
-#include <math.h>   /* time */
-#include <assert.h> /* assert */
+#include <math.h>   
+#include <assert.h> 
 #include <omp.h>
 
 using namespace std;
@@ -105,7 +105,8 @@ void run_RNG(uint64_t total, int print, Random *rngs, bool reseed)
             rngs->next();
             i++;
         }
-        //cd 
+
+        //during execution reseeding the PRNG 
         if ((reseed) && (total > RESEED_INTERVAL) )
         {
 

@@ -44,7 +44,7 @@ RDSEED      - Hardware RNG using intel secure key RESEED.
 // #define RNG2             // Array of Pre-generated Random Numbers using MT
 
 #define RDSEED_SEED     // If reseeding option is selected, RDSEED will be
-                        // used as default reseeding algorithm RESEED.
+                        // used as default reseeding algorithm in reSeed().
 // #define RDRAND_SEED  //option to also use RDRAND for reseeding which is slightly faster
 
 #define MAX_RNG_SIZE 10000000  //maximum size for RNG Array

@@ -38,3 +38,9 @@ fnv1a: run_rng.cpp
 rdrand: run_rng.cpp	
 	$(CC) -o ../bin/rdrand_rng run_rng.cpp -DRDRAND $(LIBS) 
 
+rngarry1: run_rng.cpp	
+	$(CC) -o ../bin/rngarry1_rng run_rng.cpp -DRNG1 $(LIBS)
+
+rngarry2: run_rng.cpp	
+	$(CC) -o ../bin/rngarry2_rng run_rng.cpp -DRNG2 $(LIBS)
+
