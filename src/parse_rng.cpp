@@ -28,8 +28,8 @@ void print_usage(char **argv)
     cout << "Options:" << endl;
     cout << "    -b [int]     bit postion to test for" << endl;
     cout << "    -s [int]     sum frequency" << endl;
-    cout << "    -t [int]     Generate 1 Sum total only. This overrides sum frequency." << endl;
-   
+    cout << "    -t [int]     Generate a sum for every random number. This overrides sum frequency." << endl;
+    
 
     cout << endl;
 }
