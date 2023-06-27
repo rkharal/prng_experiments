@@ -26,9 +26,9 @@ void print_usage(char **argv)
 {
     cout << "USAGE: " << argv[0] << " [options]" << endl;
     cout << "Options:" << endl;
-    cout << "    -b [int]     bit postion to test for" << endl;
-    cout << "    -s [int]     sum frequency" << endl;
-    cout << "    -t [int]     Generate a sum for every random number. This overrides sum frequency." << endl;
+    cout << "    -b [int]     Bit postion to test for" << endl;
+    cout << "    -s [int]     Sum frequency (how often to print out the ongoing Sum of bits)" << endl;
+    cout << "    -t [int]     Generate a single total (summation of all RNs). This overrides sum frequency." << endl;
     
 
     cout << endl;

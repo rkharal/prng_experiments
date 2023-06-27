@@ -50,15 +50,21 @@ Work related to PRNG Experiments (Section 6) from this work is shared in this re
    - For further instructions on building pre-generated arrays of random numbers see [Experiments.md](https://github.com/rkharal/prng_experiments/blob/main/src/Experiments.md)
 
 
-## Usage: 
+# Usage: 
 - The set of random number generators (hardware and software RNGs) used in this repository are found in [**Random.h**](https://github.com/rkharal/prng_experiments/blob/main/src/random.h).
 - There are two main experiment files, **run_rng.cpp** and **parse_rng.cpp**.
 - See each file for usage instructions. 
 - **run_rng** takes 3 parameters: The total number of RNs to generate (-n), if reseeding the PRNG is needed (-r), and the print out frequency (-p).
-- **parse_rng** takes in 3 parameters: The summation frequency (-s), 
+- **parse_rng** takes in 3 parameters: The summation output frequency (-s), the bit position to test (-b), and whether to generate only one single summation total (-t).
+- For further information on how bitwise summations work please see: [Experiments.md](https://github.com/rkharal/prng_experiments/blob/main/src/Experiments.md)
 
-## Experiments:
-- In the **scripts** directory run **./run_experiment_noreseeding.sh**  to generate all output .txt files in the **output** directory. This is an experiment example where the reseeding option is not used. All PRNGs are compared for bitwise performance in bit positions [0,15].
+# Experiments:
+- To run a sample experiment: In the **scripts** directory run
+
+```c++
+ ./run_experiment_noreseeding.sh
+ ``` 
+- This will generate all output txt files in the **output** directory. This is an experiment example where the reseeding option is not used. All PRNGs are compared for bitwise performance in bit positions [0,15].
 - Plots for this experiment can be seen in the **plots** directory (bit_compare_noreseeding.png).
-- For usage instructions and further information on bitwise randomness assessment please see [Experiments.md](https://github.com/rkharal/prng_experiments/blob/main/src/Experiments.md)
+- For additional experiments and further information on bitwise randomness assessment please see [Experiments.md](https://github.com/rkharal/prng_experiments/blob/main/src/Experiments.md)
 
