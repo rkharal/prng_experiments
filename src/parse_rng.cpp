@@ -28,7 +28,7 @@ void print_usage(char **argv)
     cout << "Options:" << endl;
     cout << "    -b [int]     Bit postion to test for" << endl;
     cout << "    -s [int]     Sum frequency (how often to print out the ongoing Sum of bits)" << endl;
-    cout << "    -t [int]     Generate a single total (summation of all RNs). This overrides sum frequency." << endl;
+    cout << "    -t [int]     Generate a single total (final sum of bitwise values). This overrides sum frequency." << endl;
     
 
     cout << endl;
